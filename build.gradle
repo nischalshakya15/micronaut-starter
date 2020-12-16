@@ -43,7 +43,7 @@ dependencies {
 
 
 application {
-    mainClass.set("micronaut.starter.Application")
+    mainClass.set("org.personal.Application")
 }
 
 java {
