@@ -1,5 +1,7 @@
 package org.personal.entity.users;
 
+import org.personal.exceptions.ResourceNotFoundException;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
@@ -29,7 +31,7 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with given id not found"));
     }
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {
