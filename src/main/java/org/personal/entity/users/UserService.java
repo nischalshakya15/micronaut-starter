@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Singleton
 public class UserService {
@@ -13,12 +14,20 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    @Inject
+    private UserMapper userMapper;
+
+    public List<UserDto> findAll() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(user -> userMapper.toDto(user))
+                .collect(Collectors.toList());
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public UserDto save(UserDto userDto) {
+        User user = userRepository.save(userMapper.toEntity(userDto));
+        return userMapper.toDto(user);
     }
 
     public User update(User user) {

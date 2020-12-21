@@ -20,13 +20,13 @@ public class UserController {
     private UserService userService;
 
     @Get
-    public HttpResponse<List<User>> findAll() {
+    public HttpResponse<List<UserDto>> findAll() {
         return HttpResponse.ok(userService.findAll());
     }
 
     @Post
-    public HttpResponse<User> create(@Body User user) {
-        return HttpResponse.created(userService.save(user));
+    public HttpResponse<UserDto> create(@Body UserDto userDto) {
+        return HttpResponse.created(userService.save(userDto));
     }
 
     @Put("/{id}")
