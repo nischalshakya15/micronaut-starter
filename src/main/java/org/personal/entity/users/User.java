@@ -30,7 +30,7 @@ public class User extends BaseEntity {
     @Column(length = 200)
     private String refreshToken;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = {

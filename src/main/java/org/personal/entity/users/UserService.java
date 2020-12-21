@@ -30,16 +30,20 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    public User update(User user) {
-        return userRepository.update(user);
+    public UserDto update(UserDto userDto) {
+        User user = userRepository.update(userMapper.toEntity(userDto));
+        return userMapper.toDto(user);
     }
 
-    public void delete(User user) {
+    public void delete(UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
         userRepository.delete(user);
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
+    public UserDto findById(Long id) {
+        return userRepository
+                .findById(id)
+                .map(user -> userMapper.toDto(user))
                 .orElseThrow(() -> new ResourceNotFoundException("Resource with given id not found"));
     }
 

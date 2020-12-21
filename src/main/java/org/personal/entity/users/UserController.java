@@ -30,22 +30,22 @@ public class UserController {
     }
 
     @Put("/{id}")
-    public HttpResponse<User> update(@PathVariable Long id, @Body User user) {
-        if (user.getId() == null || !user.getId().equals(id)) {
+    public HttpResponse<UserDto> update(@PathVariable Long id, @Body UserDto userDto) {
+        if (userDto.getId() == null || !userDto.getId().equals(id)) {
             return HttpResponse.badRequest();
         }
-        return HttpResponse.ok(userService.update(user));
+        return HttpResponse.ok(userService.update(userDto));
     }
 
     @Delete("/{id}")
     public HttpResponse<Void> remove(@PathVariable Long id) {
-        User user = userService.findById(id);
-        userService.delete(user);
+        UserDto userDto = userService.findById(id);
+        userService.delete(userDto);
         return HttpResponse.noContent();
     }
 
     @Get("/{id}")
-    public HttpResponse<User> findOne(@PathVariable Long id) {
+    public HttpResponse<UserDto> findOne(@PathVariable Long id) {
         return HttpResponse.ok(userService.findById(id));
     }
 }
