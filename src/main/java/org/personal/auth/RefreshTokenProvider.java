@@ -7,6 +7,7 @@ import io.micronaut.security.token.refresh.RefreshTokenPersistence;
 import io.reactivex.Flowable;
 import org.personal.entity.roles.Role;
 import org.personal.entity.users.UserService;
+import org.personal.exceptions.TokenNotFoundException;
 import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;
@@ -29,6 +30,6 @@ public class RefreshTokenProvider implements RefreshTokenPersistence {
     public Publisher<UserDetails> getUserDetails(String refreshToken) {
         return userService.findByRefreshToken(refreshToken).map(user ->
                 Flowable.just(new UserDetails(user.getUsername(), user.getRoles().stream().map(Role::getName).collect(Collectors.toList())))
-        ).orElse(Flowable.error(new RuntimeException("Token not found")));
+        ).orElse(Flowable.error(new TokenNotFoundException("Token not found")));
     }
 }

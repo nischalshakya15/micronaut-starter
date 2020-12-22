@@ -10,11 +10,11 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Tag(name = "Users")
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller(UserController.BASE_URL)
 public class UserController {
 
-    static final String BASE_URL = "/users";
+    static final String BASE_URL = "/api/users";
 
     @Inject
     private UserService userService;
