@@ -1,50 +1,18 @@
 package org.personal.entity.users;
 
-import org.personal.exceptions.ResourceNotFoundException;
+import org.personal.base.BaseService;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Singleton
-public class UserService {
+public class UserService extends BaseService<User, UserDto> {
 
-    @Inject
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Inject
-    private UserMapper userMapper;
-
-    public List<UserDto> findAll() {
-        return userRepository
-                .findAll()
-                .stream()
-                .map(user -> userMapper.toDto(user))
-                .collect(Collectors.toList());
-    }
-
-    public UserDto save(UserDto userDto) {
-        User user = userRepository.save(userMapper.toEntity(userDto));
-        return userMapper.toDto(user);
-    }
-
-    public UserDto update(UserDto userDto) {
-        User user = userRepository.update(userMapper.toEntity(userDto));
-        return userMapper.toDto(user);
-    }
-
-    public void delete(UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
-        userRepository.delete(user);
-    }
-
-    public UserDto findById(Long id) {
-        return userRepository
-                .findById(id)
-                .map(user -> userMapper.toDto(user))
-                .orElseThrow(() -> new ResourceNotFoundException("Resource with given id not found"));
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        super(userRepository, userMapper);
+        this.userRepository = userRepository;
     }
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {

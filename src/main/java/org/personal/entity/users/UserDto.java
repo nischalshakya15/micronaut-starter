@@ -2,15 +2,16 @@ package org.personal.entity.users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.personal.base.BaseDto;
 import org.personal.entity.roles.Role;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class UserDto {
-
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class UserDto extends BaseDto {
 
     private String username;
 
@@ -25,3 +26,4 @@ public class UserDto {
 
     private Set<Role> roles = new HashSet<>();
 }
+

@@ -2,13 +2,13 @@ package org.personal.entity.users;
 
 import io.micronaut.data.annotation.Join;
 import io.micronaut.data.annotation.Repository;
-import io.micronaut.data.jpa.repository.JpaRepository;
+import org.personal.base.BaseRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends BaseRepository<User> {
 
     Optional<User> findByUsernameAndPassword(String username, String password);
 
