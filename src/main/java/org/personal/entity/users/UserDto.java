@@ -22,6 +22,7 @@ public class UserDto extends BaseDto {
 
     private Boolean isActivated;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String refreshToken;
 
     private Set<Role> roles = new HashSet<>();
