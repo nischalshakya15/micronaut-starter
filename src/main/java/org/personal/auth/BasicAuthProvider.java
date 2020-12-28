@@ -27,13 +27,13 @@ public class BasicAuthProvider implements AuthenticationProvider {
     @Override
     public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest,
                                                           AuthenticationRequest<?, ?> authenticationRequest) {
-        final String username = authenticationRequest.getIdentity().toString();
+        final String usernameOrEmail = authenticationRequest.getIdentity().toString();
         final String password = authenticationRequest.getSecret().toString();
-        Optional<User> user = userService.findByUsernameAndPassword(username, password);
+        Optional<User> user = userService.findByUsernameAndPassword(usernameOrEmail, password);
         return Flowable.just(
                 user.map(u -> {
                     if (u.getPassword().equals(password)) {
-                        return new UserDetails(username, getRoles(u));
+                        return new UserDetails(usernameOrEmail, getRoles(u));
                     }
                     return new AuthenticationFailed(CREDENTIALS_DO_NOT_MATCH);
                 }).orElse(new AuthenticationFailed(USER_NOT_FOUND))

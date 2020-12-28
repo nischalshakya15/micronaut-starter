@@ -15,9 +15,9 @@ public class UserService extends BaseService<User, UserDto> {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findByUsernameAndPassword(String username, String password) {
+    public Optional<User> findByUsernameAndPassword(String usernameOrEmail, String password) {
         return userRepository
-                .findByUsernameAndPassword(username, password);
+                .authenticate(usernameOrEmail, password, usernameOrEmail);
     }
 
     public Optional<User> findByRefreshToken(String refreshToken) {
